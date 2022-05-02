@@ -1,14 +1,24 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { MdShoppingBasket } from 'react-icons/md';
+import React from "react";
+import { Link } from "react-router-dom";
+import { MdShoppingBasket } from "react-icons/md";
 
-import logo from '../../assets/images/logo.svg';
-import { Container, Cart } from './styles';
-import { useCart } from '../../hooks/useCart';
+import logo from "../../assets/images/logo.svg";
+import { Container, Cart } from "./styles";
+import { useCart } from "../../hooks/useCart";
+
+/*
+  Você deve receber o array cart do hook useCart 
+  e mostrar em tela a quantidade de produtos distintos adicionados ao carrinho.
+  Dessa forma, se o carrinho possui 4 unidades do item A e 1 unidade do item B 
+  o valor a ser mostrado é 2 itens.
+*/
 
 const Header = (): JSX.Element => {
-  // const { cart } = useCart();
-  // const cartSize = // TODO;
+  const { cart } = useCart();
+  const cartSize = cart.reduce((acc, curr) => {
+    if (!acc.includes(curr.id)) acc.push(curr.id);
+    return acc;
+  }, [] as number[]).length;
 
   return (
     <Container>
@@ -20,7 +30,7 @@ const Header = (): JSX.Element => {
         <div>
           <strong>Meu carrinho</strong>
           <span data-testid="cart-size">
-            {/* {cartSize === 1 ? `${cartSize} item` : `${cartSize} itens`} */}
+            {cartSize === 1 ? `${cartSize} item` : `${cartSize} itens`}
           </span>
         </div>
         <MdShoppingBasket size={36} color="#FFF" />
